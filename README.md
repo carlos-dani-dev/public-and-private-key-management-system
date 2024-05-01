@@ -5,11 +5,11 @@ It's a python management system for public and private keys
 
 <p>The programm must contain the following methods:</p>
 
-1-Key generator based on openSSL patterns
+1-Key generator method based on openSSL patterns
 
-2-Key Save/Export or key Load/Import
+2-Key Save/Export or key Load/Import method
 
-3-Key list, search and delete
+3-Key list, search and delete methods
 
 4-Passowrd protection of the user's private key
 
