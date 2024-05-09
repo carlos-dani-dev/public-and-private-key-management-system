@@ -31,11 +31,10 @@ def import_publickey(associated_email, publickey_filepath, star_export_op = True
     return imported_publickey
 
 
-def export_keypair(my_publickey, my_privatekey):
-    associated_email = input("Associated email: ")
-    import_file_password = input("RSA private key import file password: ")
-    iekey.export_RSA_publickey("public/"+associated_email, my_publickey)
-    iekey.export_RSA_privatekey("private/"+associated_email, my_privatekey, import_file_password)
+def export_keypair(exportpath, my_publickey, my_privatekey, privatekey_file_password):
+
+    iekey.export_RSA_publickey(exportpath, my_publickey)
+    iekey.export_RSA_privatekey(exportpath, my_privatekey, privatekey_file_password)
 
 
 def export_publickey(exportpath, my_publickey):
@@ -47,7 +46,7 @@ def list_my_publickeys():
                     
 
 def list_my_privatekeys():
-    print(os.listdir("private"))
+    print(os.listdir("private/"))
 
 
 def search_publickey(associated_email):
@@ -60,11 +59,11 @@ def search_publickey(associated_email):
     return None
 
 
-def search_privatekey(associated_email, import_file_password):
+def search_privatekey(associated_email, privatekey_file_password):
     files_list = os.listdir("public/")
     for file_name in files_list:
         if file_name == associated_email+".pem":
-            privatekey = iekey.import_RSA_privatekey("private/"+associated_email+".pem", import_file_password)
+            privatekey = iekey.import_RSA_privatekey("private/"+associated_email+".pem", privatekey_file_password)
             print(privatekey)
             return privatekey
     return None
@@ -76,4 +75,6 @@ def encrypt_plain_file(filepath, associated_email, rsa_privatekey_file_password,
     return edfiles.encrypt_file(filepath, associated_email, rsa_privatekey_file_password, pub_or_priv)
 
 def decrypt_file(ciphertext_byte_filepath, associated_email, rsa_privatekey_file_password, pub_or_priv):
-    edfiles.decrypt_file(ciphertext_byte_filepath, associated_email, rsa_privatekey_file_password, pub_or_priv)
+    return edfiles.decrypt_file(ciphertext_byte_filepath, associated_email, rsa_privatekey_file_password, pub_or_priv)
+
+

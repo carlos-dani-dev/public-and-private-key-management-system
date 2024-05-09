@@ -5,9 +5,8 @@ from Crypto.Random import get_random_bytes
 
 
 def encrypt_file(plaintext_filepath, associated_email, rsa_privatekey_file_password, pub_or_priv):
+    
     if pub_or_priv == 0:
-
-        aes_key = get_random_bytes(16)
         rsa_key = iekey.import_RSA_publickey("public/"+associated_email+".pem")
         cipher = PKCS1_v1_5.new(rsa_key)
         plaintext = open(plaintext_filepath)
@@ -15,7 +14,6 @@ def encrypt_file(plaintext_filepath, associated_email, rsa_privatekey_file_passw
         ciphertext = cipher.encrypt(plaintext)
 
     if pub_or_priv == 1:
-        aes_key = get_random_bytes(16)
         rsa_key = iekey.import_RSA_privatekey("private/"+associated_email+".pem", rsa_privatekey_file_password)
         cipher = PKCS1_v1_5.new(rsa_key)
         plaintext = open(plaintext_filepath).read().encode("utf-8")
