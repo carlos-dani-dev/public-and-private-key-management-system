@@ -20,15 +20,45 @@ class JanelaInicial(tk.Tk):
         label.pack(pady=10)
 
         # Botão de gerar par de chaves
-        gerar_chaves_button = tk.Button(self.container, text="Gerar Par de Chaves", command=self.mostrar_pagina_chaves)
-        gerar_chaves_button.pack()
+        gerenciar_chaves = tk.Button(self.container, text="Gerenciar chaves", command=self.mostrar_pagina_gerar_chaves)
+        gerenciar_chaves.pack(pady=20)
 
-    def mostrar_pagina_chaves(self):
+        gerar_chaves_button = tk.Button(self.container, text="Gerar Par de Chaves", command=self.mostrar_pagina_gerenciar_chaves)
+        gerar_chaves_button.pack(pady=20)
+
+        enc_dec_button = tk.Button(self.container, text="Encriptar/Decriptar arquivos", command=self.mostrar_pagina_enc_dec)
+        enc_dec_button.pack(pady=20)
+
+    def mostrar_pagina_gerar_chaves(self):
+        # Limpar o container
+        self.limpar_container()
+
+        # Adicionar widgets da página de gerar chaves
+        label = tk.Label(self.container, text="Gerenciar Chaves")
+        label.pack(pady=10)
+
+        # Botão de voltar para a página inicial
+        voltar_button = tk.Button(self.container, text="Voltar", command=self.mostrar_pagina_inicial)
+        voltar_button.pack()
+
+    def mostrar_pagina_gerenciar_chaves(self):
         # Limpar o container
         self.limpar_container()
 
         # Adicionar widgets da página de gerar chaves
         label = tk.Label(self.container, text="Gerar Par de Chaves")
+        label.pack(pady=10)
+
+        # Botão de voltar para a página inicial
+        voltar_button = tk.Button(self.container, text="Voltar", command=self.mostrar_pagina_inicial)
+        voltar_button.pack()
+
+    def mostrar_pagina_enc_dec(self):
+        # Limpar o container
+        self.limpar_container()
+
+        # Adicionar widgets da página de gerar chaves
+        label = tk.Label(self.container, text="Encriptar/Decriptar Arquivos")
         label.pack(pady=10)
 
         # Botão de voltar para a página inicial

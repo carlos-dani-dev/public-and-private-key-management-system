@@ -1,0 +1,42 @@
+Página Gerenciar Chaves:
+-> Buscar:
+	email: texto
+	chave publica_privada: multipla escolha
+	senha: texto
+	
+-> Deletar:
+	email: texto
+
+-> Listar
+
+-> Exportar:
+	email: texto
+	chave publica_privada: multipla escolha
+	senha: texto
+	exportpath: selecionar_arquivo	
+
+-> Importar
+	email: texto
+	chave publica_privada: multipla escolha
+	senha: texto
+	importpath: selecionar_arquivo
+
+Página Gerar Par de Chaves:
+-> Gerar Par de Chaves:
+	email: texto
+	tamanho da chave: multipla escolha
+	senha: texto
+
+
+Página Encriptar/Decriptar:
+-> Encriptar:
+	caminho_arquivo: selecionar_arquivo
+	email: texto
+	chave publica_privada: multipla escolha
+	senha: texto
+
+-> Decriptar:
+	caminho_arquivo: selecionar_arquivo
+	email: texto
+	chave publica_privada: multipla escolha
+	senha: texto	
