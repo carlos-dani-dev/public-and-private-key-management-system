@@ -36,22 +36,32 @@ def export_RSA_privatekey(exportpath, my_privatekey, file_password: str):
     
     with open(exportpath+".pem", "wb") as f:
         #file_password tem que ser binário?
-        data = my_privatekey.export_key(passphrase=file_password,
-                                    pkcs=8, # padrão de codificação da chave privada no arquivo
-                                    protection='PBKDF2WithHMAC-SHA512AndAES256-CBC', # esquema
+        if file_password is None:
+            data = my_privatekey.export_key(passphrase=file_password,
+                                    pkcs=1, # padrão de codificação da chave privada no arquivo
+                                    protection=None, # esquema
                                     # de encriptação da chave privada com a passphrase (recomendado) 
-                                    prot_params={'iteration_count':131072}) # parâmetros de
+                                    prot_params=None) # parâmetros de
                                     # derivação da chave de encriptação da chave privada a
                                     # partir da passphrase (recomendado)
+        else:    
+            data = my_privatekey.export_key(passphrase=file_password,
+                                        pkcs=8, # padrão de codificação da chave privada no arquivo
+                                        protection='PBKDF2WithHMAC-SHA512AndAES256-CBC', # esquema
+                                        # de encriptação da chave privada com a passphrase (recomendado) 
+                                        prot_params={'iteration_count':131072}) # parâmetros de
+                                        # derivação da chave de encriptação da chave privada a
+                                        # partir da passphrase (recomendado)
         f.write(data)
 
     return my_privatekey
 
 
-def export_RSA_publickey(exportpath, my_publickey):
+def export_RSA_publickey(exportpath, my_publickey, start_exp_op):
     if not os.path.exists("public/"):
         os.makedirs("public/")
 
-    with open(exportpath+".pem", "wb") as f:
+    if not start_exp_op: exportpath+=".pem"
+    with open(exportpath, "wb") as f:
         data = my_publickey.public_key().export_key()
         f.write(data)
