@@ -115,16 +115,16 @@ class JanelaInicial(tk.Tk):
         email_label = tk.Label(self.container, text="Email:")
         email_label.pack()
 
-        email_var = tk.StringVar()
-        email_entry = tk.Entry(self.container, textvariable=email_var, background="gray")
+        self.email_var = tk.StringVar()
+        email_entry = tk.Entry(self.container, textvariable=self.email_var, background="gray")
         email_entry.pack()
 
         # Label e entrada para a senha
         senha_label = tk.Label(self.container, text="Senha:")
         senha_label.pack()
 
-        senha_var = tk.StringVar()
-        senha_entry = tk.Entry(self.container, textvariable=senha_var, background="gray")
+        self.senha_var = tk.StringVar()
+        senha_entry = tk.Entry(self.container, textvariable=self.senha_var, background="gray")
         senha_entry.pack()
 
         label = tk.Label(self.container, text="Chave:")
@@ -141,13 +141,14 @@ class JanelaInicial(tk.Tk):
         self.caminho_arquivo_var = tk.StringVar()  # StringVar para armazenar o caminho do arquivo
 
         # Label para escolher o arquivo
-        ed_arquivo_label = tk.Label(self.container, text="Escolher Arquivo:", textvariable=self.caminho_arquivo_var)
+        ed_arquivo_label = tk.Label(self.container, text="Escolher Arquivo:", textvariable = self.caminho_arquivo_var)
         ed_arquivo_label.pack(pady=10)
 
         # Botão para escolher o arquivo
         ed_escolher_arquivo_button = tk.Button(self.container, text="Escolher Arquivo", command=self.buscar_arquivo)
         ed_escolher_arquivo_button.pack(pady=5)
 
+        
         ed_enc_button = tk.Button(self.container, text="Encriptar", command=self.encriptar_arquivo)
         ed_enc_button.pack()
 
@@ -414,19 +415,27 @@ class JanelaInicial(tk.Tk):
         email = self.email_var.get()
         senha = self.senha_var.get()
         arquivo = self.caminho_arquivo_var.get()
-        if self.ed_pubpriv_checkbutton_var.get() == 0:
-            br.encrypt_file(email, senha, arquivo, "public")
+        pub_or_priv = self.ed_pubpriv_checkbutton_var.get()
+        
+        print("Email: ", email)
+        print("Senha: ", senha)
+        print("Arquivo: ", arquivo)
+        print("Pub or Priv: ", pub_or_priv)
+        print(arquivo)
+        if pub_or_priv== 0:
+            br.encrypt_plain_file(arquivo,email, senha, "public")
         else:
-            br.encrypt_file(email, senha, arquivo, "private")
+            br.encrypt_plain_file(arquivo,email, senha,  "private")
 
     def decriptar_arquivo(self):
         email = self.email_var.get()
         senha = self.senha_var.get()
         arquivo = self.caminho_arquivo_var.get()
-        if self.ed_pubpriv_checkbutton_var.get() == 0:
-            br.decrypt_file(email, senha, arquivo, "public")
+        pub_or_priv = self.ed_pubpriv_checkbutton_var.get()
+        if pub_or_priv== 0:
+            br.decrypt_file(arquivo,email, senha, "public")
         else:
-            br.decrypt_file(email, senha, arquivo, "private")
+            br.decrypt_file(arquivo,email, senha,  "private")
 
 if __name__ == "__main__":
     janela_inicial = JanelaInicial()

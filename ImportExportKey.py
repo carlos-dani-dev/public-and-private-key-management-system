@@ -10,20 +10,21 @@ def import_RSA_privatekey(key_filepath: str, file_password):
     
     with open(key_filepath, "rb") as f:
         data = f.read()
-        my_privatekey = RSA.import_key(data, file_password)
+        my_privatekey = RSA.importKey(data, file_password)
 
     return my_privatekey
 
 
 # adicionar associated_email para tratamento interno
 def import_RSA_publickey(key_filepath: str):
+    print("public_key_filepath: "+key_filepath)
     if not os.path.exists(key_filepath):
         print(key_filepath+" not founded")
         return None
 
     with open(key_filepath, "rb") as f:
         data = f.read()
-        my_publickey = RSA.import_key(data)
+        my_publickey = RSA.importKey(data)
     
     return my_publickey
 

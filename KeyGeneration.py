@@ -9,6 +9,6 @@ def rsa_keypair_generation(bits_key_length, privatekey_file_password, publickey_
     key = RSA.generate(bits_key_length)
     privatekey = iekey.export_RSA_privatekey("private/"+privatekey_filename, key, privatekey_file_password)
     publickey = key.publickey()
-    iekey.export_RSA_publickey("public/"+publickey_filename, publickey)
+    iekey.export_RSA_publickey("public/"+publickey_filename, publickey, start_exp_op=False)
     
     return (publickey, privatekey)
