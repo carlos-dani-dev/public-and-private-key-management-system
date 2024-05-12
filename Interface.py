@@ -346,15 +346,26 @@ class JanelaInicial(tk.Tk):
                                           onvalue=1, offvalue=0, background="light blue")
         priv_checkbutton.pack()
 
-        self.caminho_arquivo_var = tk.StringVar()  # StringVar para armazenar o caminho do arquivo
-
-        # Label para escolher o arquivo
-        arquivo_label = tk.Label(self.container, text="Escolher Arquivo:", textvariable=self.caminho_arquivo_var)
-        arquivo_label.pack(pady=10)
+        self.caminho_pub_arquivo_var = tk.StringVar()  # StringVar para armazenar o caminho do arquivo
 
         # Botão para escolher o arquivo
-        escolher_arquivo_button = tk.Button(self.container, text="Escolher Arquivo", command=self.buscar_arquivo)
-        escolher_arquivo_button.pack(pady=5)
+        escolher_arquivo_pub_button = tk.Button(self.container, text="Arquivo da Chave Pública", command=self.buscar_pub_arquivo)
+        escolher_arquivo_pub_button.pack(pady=10)
+
+        # Label para escolher o arquivo
+        arquivo_pub_label = tk.Label(self.container, text="----Public key----", textvariable=self.caminho_pub_arquivo_var)
+        arquivo_pub_label.pack()
+
+
+        self.caminho_priv_arquivo_var = tk.StringVar()  # StringVar para armazenar o caminho do arquivo
+
+        # Botão para escolher o arquivo
+        escolher_arquivo_priv_button = tk.Button(self.container, text="Arquivo da Chave Privada", command=self.buscar_priv_arquivo)
+        escolher_arquivo_priv_button.pack(pady=10)
+
+        # Label para escolher o arquivo
+        arquivo_priv_label = tk.Label(self.container, text="----Private key----", textvariable=self.caminho_priv_arquivo_var)
+        arquivo_priv_label.pack()
 
         export_button = tk.Button(self.container, text="Exportar", command=self.exportar_chave)
         export_button.pack()
@@ -368,14 +379,17 @@ class JanelaInicial(tk.Tk):
     def exportar_chave(self):
         email = self.email_var.get()
         senha = self.senha_var.get()
-        arquivo = self.caminho_arquivo_var.get()
+        arquivo_pub = self.caminho_pub_arquivo_var.get()
+        arquivo_priv = self.caminho_priv_arquivo_var.get()
         if self.ei_pub_checkbutton_var.get() == 1 and self.ei_priv_checkbutton_var.get() == 1:
-            br.import_keypair(arquivo, email, email, senha, True)
+            (pubkey, privkey) = br.import_keypair("public/"+email+".pem", "private/"+email+".pem", senha)
+            br.export_keypair(arquivo_pub, arquivo_priv, pubkey, privkey, senha)
             print("Chaves pública e privada exportadas!")
         if self.ei_priv_checkbutton_var.get() == 1 and self.ei_pub_checkbutton_var.get() == 0:
             print("Impossível exportar unicamente a chave privada!")
         if self.ei_pub_checkbutton_var.get() == 1 and self.ei_priv_checkbutton_var.get() == 0:
-            br.import_publickey(arquivo, email, True)
+            pubkey = br.import_publickey(email)
+            br.export_publickey(arquivo_pub, pubkey)
             print("Chave pública exportada!")
         if self.ei_pub_checkbutton_var.get() == 0 and self.ei_priv_checkbutton_var.get() == 0:
             print("É preciso que pelo menos uma opção esteja marcada!")
@@ -383,14 +397,17 @@ class JanelaInicial(tk.Tk):
     def importar_chave(self):
         email = self.email_var.get()
         senha = self.senha_var.get()
-        arquivo = self.caminho_arquivo_var.get()
+        arquivo_pub = self.caminho_pub_arquivo_var.get()
+        arquivo_priv = self.caminho_priv_arquivo_var.get()
         if self.ei_pub_checkbutton_var.get() == 1 and self.ei_priv_checkbutton_var.get() == 1:
-            br.import_keypair(arquivo, email, email, senha)
+            (pubkey, privkey) = br.import_keypair(arquivo_pub, arquivo_priv, senha)
+            br.export_keypair("public/"+email+".pem", "private/"+email+".pem", pubkey, privkey, senha)
             print("Chaves pública e privada importadas!")
         if self.ei_priv_checkbutton_var.get() == 1 and self.ei_pub_checkbutton_var.get() == 0:
             print("Impossível importar unicamente a chave privada!")
         if self.ei_pub_checkbutton_var.get() == 1 and self.ei_priv_checkbutton_var.get() == 0:
-            br.import_external_publickey(email, arquivo, True)
+            pubkey = br.import_publickey(arquivo_pub)
+            br.export_publickey("public/"+email+".pem", pubkey)
             print("Chave pública importada!")
         if self.ei_pub_checkbutton_var.get() == 0 and self.ei_priv_checkbutton_var.get() == 0:
             print("É preciso que pelo menos uma opção esteja marcada!")
@@ -400,11 +417,23 @@ class JanelaInicial(tk.Tk):
         for widget in self.container.winfo_children():
             widget.destroy()
 
+    def buscar_pub_arquivo(self):
+        # Função para buscar o arquivo
+        arquivo_path = filedialog.askopenfilename()
+        # Atualiza o valor do StringVar com o caminho do arquivo selecionado
+        self.caminho_pub_arquivo_var.set(arquivo_path)
+
     def buscar_arquivo(self):
         # Função para buscar o arquivo
         arquivo_path = filedialog.askopenfilename()
         # Atualiza o valor do StringVar com o caminho do arquivo selecionado
         self.caminho_arquivo_var.set(arquivo_path)
+
+    def buscar_priv_arquivo(self):
+        # Função para buscar o arquivo
+        arquivo_path = filedialog.askopenfilename()
+        # Atualiza o valor do StringVar com o caminho do arquivo selecionado
+        self.caminho_priv_arquivo_var.set(arquivo_path)
 
     def mostrar_info_gerar_chaves(self, email, senha, tamanho_chave):
         if senha == "":

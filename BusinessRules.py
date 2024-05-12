@@ -10,24 +10,14 @@ def generate_keypair(bits_length, associated_email, privatekey_file_password):
     kgen.rsa_keypair_generation(bits_length, privatekey_file_password, associated_email, associated_email)
 
 
-def import_keypair(associated_email, privatekey_filepath, publickey_filepath, import_file_password, start_export_op = True):
-    imported_private_key = iekey.import_RSA_privatekey(privatekey_filepath, import_file_password)
+def import_keypair(publickey_filepath, privatekey_filepath, import_file_password):
     imported_publickey = iekey.import_RSA_publickey(publickey_filepath)
-    if start_export_op:
-        print("Importação concluída => Iniciando exportação")
-        export_file_password = input("RSA private key export file password: ")
-        iekey.export_RSA_privatekey("private/"+associated_email, imported_private_key, export_file_password)
-        iekey.export_RSA_publickey("public/"+associated_email, imported_publickey)
-    print(import_publickey, imported_private_key)
+    imported_private_key = iekey.import_RSA_privatekey(privatekey_filepath, import_file_password)
     return (imported_publickey, imported_private_key)
 
 
-def import_publickey(associated_email, publickey_filepath, star_export_op = True):
-    imported_publickey = iekey.import_RSA_publickey("public/"+publickey_filepath+".pem")
-    if star_export_op:
-        print("Importação concluída => Iniciando exportação")
-        iekey.export_RSA_publickey(associated_email, imported_publickey, star_export_op)
-    # print(imported_publickey)
+def import_publickey(publickey_filepath):
+    imported_publickey = iekey.import_RSA_publickey(publickey_filepath)
     return imported_publickey
 
 def import_external_publickey(associated_email, publickey_filepath, start_export_op = True):
@@ -38,10 +28,9 @@ def import_external_publickey(associated_email, publickey_filepath, start_export
     # print(imported_publickey)
     return imported_publickey
 
-def export_keypair(exportpath, my_publickey, my_privatekey, privatekey_file_password):
-
-    iekey.export_RSA_publickey(exportpath, my_publickey)
-    iekey.export_RSA_privatekey(exportpath, my_privatekey, privatekey_file_password)
+def export_keypair(pub_exportpath, priv_exportpath, my_publickey, my_privatekey, privatekey_file_password):
+    iekey.export_RSA_publickey(pub_exportpath, my_publickey)
+    iekey.export_RSA_privatekey(priv_exportpath, my_privatekey, privatekey_file_password)
 
 
 def export_publickey(exportpath, my_publickey):

@@ -35,7 +35,7 @@ def export_RSA_privatekey(exportpath, my_privatekey, file_password: str):
     if not os.path.exists("private/"):
         os.makedirs("private/")
     
-    with open(exportpath+".pem", "wb") as f:
+    with open(exportpath, "wb") as f:
         #file_password tem que ser binário?
         if file_password is None:
             data = my_privatekey.export_key(passphrase=file_password,
@@ -58,11 +58,10 @@ def export_RSA_privatekey(exportpath, my_privatekey, file_password: str):
     return my_privatekey
 
 
-def export_RSA_publickey(exportpath, my_publickey, start_exp_op):
+def export_RSA_publickey(exportpath, my_publickey):
     if not os.path.exists("public/"):
         os.makedirs("public/")
 
-    if not start_exp_op: exportpath+=".pem"
     with open(exportpath, "wb") as f:
         data = my_publickey.public_key().export_key()
         f.write(data)
