@@ -79,10 +79,10 @@ def delete_key(email):
             something_deleted = 1
     return something_deleted
 
-# o encriptador gera o criptograma em bytes
-# meu programa deve receber o criptograma em bytes?
+
 def encrypt_plain_file(filepath, associated_email, rsa_privatekey_file_password, pub_or_priv):
     return edfiles.encrypt_file(filepath, associated_email, rsa_privatekey_file_password, pub_or_priv)
+
 
 def decrypt_file(ciphertext_byte_filepath, associated_email, rsa_privatekey_file_password, pub_or_priv):
     return edfiles.decrypt_file(ciphertext_byte_filepath, associated_email, rsa_privatekey_file_password, pub_or_priv)
