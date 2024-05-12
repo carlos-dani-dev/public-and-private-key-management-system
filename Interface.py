@@ -270,6 +270,7 @@ class JanelaInicial(tk.Tk):
 
         # Campo de listagem para chaves públicas
         self.lista_chaves_publicas = tk.Listbox(self.container)
+        #Adicionar elementos à listagem
         self.lista_chaves_publicas.pack()
 
         # Adicionar espaço entre os campos

@@ -50,10 +50,12 @@ def export_publickey(exportpath, my_publickey):
 
 def list_my_publickeys():
     print(os.listdir("public/"))
+    return os.listdir("public/")
                     
 
 def list_my_privatekeys():
     print(os.listdir("private/"))
+    return os.listdir("private/")
 
 
 def search_publickey(associated_email):
