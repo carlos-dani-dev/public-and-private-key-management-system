@@ -300,14 +300,18 @@ class JanelaInicial(tk.Tk):
         self.lista_chaves_privadas.delete(0, tk.END)
 
         # Adicionar as chaves públicas à listagem
+        pub_count = 0
         if list_pub is not None:
             for chave in list_pub:
-                self.lista_chaves_publicas.insert(tk.END, chave)
+                pub_count+=1
+                self.lista_chaves_publicas.insert(pub_count, chave)
 
         # Adicionar as chaves privadas à listagem
+        priv_count = 0
         if list_priv is not None:
             for chave in list_priv:
-                self.lista_chaves_privadas.insert(tk.END, chave)
+                priv_count+=1
+                self.lista_chaves_privadas.insert(priv_count, chave)
 
 
     def mostrar_pagina_exportar_importar_chaves(self):
