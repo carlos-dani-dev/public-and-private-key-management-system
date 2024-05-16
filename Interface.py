@@ -288,11 +288,11 @@ class JanelaInicial(tk.Tk):
         self.ei_pub_checkbutton_var = tk.IntVar(self.container, 0)
         self.ei_priv_checkbutton_var = tk.IntVar(self.container, 0)
         pub_checkbutton = tk.Checkbutton(self.container, text="Pública", variable=self.ei_pub_checkbutton_var,
-                                        onvalue=1, offvalue=0, bg="lightblue", font=("Arial", 12))
+                                        onvalue=1, offvalue=0, bg="#E0E0E0", font=("Arial", 12))
         pub_checkbutton.pack()
         
         priv_checkbutton = tk.Checkbutton(self.container, text="Privada", variable=self.ei_priv_checkbutton_var,
-                                        onvalue=1, offvalue=0, bg="lightblue", font=("Arial", 12))
+                                        onvalue=1, offvalue=0, bg="#E0E0E0", font=("Arial", 12))
         priv_checkbutton.pack()
         
         self.caminho_pub_arquivo_var = tk.StringVar()
@@ -324,17 +324,23 @@ class JanelaInicial(tk.Tk):
         senha = self.senha_var.get()
         arquivo_pub = self.caminho_pub_arquivo_var.get()
         arquivo_priv = self.caminho_priv_arquivo_var.get()
+        tk.Label(self.container, text="", font=("Arial", 12)).pack()
         if self.ei_pub_checkbutton_var.get() == 1 and self.ei_priv_checkbutton_var.get() == 1:
             (pubkey, privkey) = br.import_keypair("public/"+email+".pem", "private/"+email+".pem", senha)
             br.export_keypair(arquivo_pub, arquivo_priv, pubkey, privkey, senha)
             print("Chaves pública e privada exportadas!")
+            tk.Label(self.container, text="Chaves pública e privada exportadas!", font=("Arial", 12)).pack()
         if self.ei_priv_checkbutton_var.get() == 1 and self.ei_pub_checkbutton_var.get() == 0:
             print("Impossível exportar unicamente a chave privada!")
+            tk.Label(self.container, text="Impossível exportar unicamente a chave privada!", font=("Arial", 12)).pack()
         if self.ei_pub_checkbutton_var.get() == 1 and self.ei_priv_checkbutton_var.get() == 0:
             pubkey = br.import_publickey(email)
             br.export_publickey(arquivo_pub, pubkey)
             print("Chave pública exportada!")
+            tk.Label(self.container, text="Chave pública exportada!", font=("Arial", 12)).pack()
         if self.ei_pub_checkbutton_var.get() == 0 and self.ei_priv_checkbutton_var.get() == 0:
+            #Mostrar na tela mensagem de erro
+            tk.Label(self.container, text="É preciso que pelo menos uma opção esteja marcada!", font=("Arial", 12)).pack()
             print("É preciso que pelo menos uma opção esteja marcada!")
 
     def importar_chave(self):
@@ -381,7 +387,12 @@ class JanelaInicial(tk.Tk):
     def mostrar_info_gerar_chaves(self, email, senha, tamanho_chave):
         if senha == "":
             senha = None
-        br.generate_keypair(int(tamanho_chave), email, senha)
+        key = br.generate_keypair(int(tamanho_chave), email, senha)
+        if(key is not None):
+            #Mostrar texto na tela
+            tk.Label(self.container, text="Chave gerada com sucesso!", font=("Arial", 14)).pack()
+            
+            
 
     def encriptar_arquivo(self):
         email = self.email_var.get()
