@@ -7,7 +7,7 @@ import os
 # OBS: NÃO É POSSÍVEL ESCREVER 2 CHAVES COM O MESMO EMAIL ASSOCIADO, A ANTERIOR É SEMPRE SOBRESCRITA
 
 def generate_keypair(bits_length, associated_email, privatekey_file_password):
-    kgen.rsa_keypair_generation(bits_length, privatekey_file_password, associated_email, associated_email)
+    return kgen.rsa_keypair_generation(bits_length, privatekey_file_password, associated_email, associated_email)
 
 
 def import_keypair(publickey_filepath, privatekey_filepath, import_file_password):
