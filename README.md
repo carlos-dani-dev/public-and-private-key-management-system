@@ -4,7 +4,7 @@ It's a python management system for public and private keys
 
 ## Requisites
 
-### Install pycrypto
+#### Install pycrypto
 
 ``` pip install pycrypto ```
 
@@ -13,7 +13,7 @@ It's a python management system for public and private keys
 
 ## Methods
 
-### 1 - Key generator method based on openSSL patterns
+#### 1 - Key generator method based on openSSL patterns
 
 ### 2 - Key Save/Export or key Load/Import method
 
